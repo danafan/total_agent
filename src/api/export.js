@@ -9,13 +9,10 @@ export default{
 			cancelButtonText: '取消',
 			type: 'warning'
 		}).then(() => {
-			resource.exportUp(req).then(res => {
-				if(res.data.code == 1){
-					Message.success(res.data.msg);
-				}else{
-					Message.warning(res.data.msg);
-				}
-			})
+			let str = 'agent_id' + '=' + localStorage.getItem("agent_id");
+			req.arr.push(str); 
+			let url = `${location.origin}/agentadmin/${req.url}?${req.arr.join('&')}`;
+			window.open(url);
 		}).catch(() => {
 			Message({
 				type: 'info',

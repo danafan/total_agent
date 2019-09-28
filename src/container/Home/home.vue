@@ -4,7 +4,7 @@
 			<el-header class="header">
 				<div class="gxk">总代理后台</div>
 				<div class="headerRight">
-					<div class="username">{{admin_name}}</div>
+					<div class="username">{{agent_name}}</div>
 					<div class="line"></div>
 					<div class="tui" @click="exit">退出</div>
 				</div>
@@ -122,7 +122,7 @@
 						web_url:'index'
 					}]
 				},{
-					icon:'price-tag',
+					icon:'trophy-1',
 					menu_name:'团队管理',
 					menu2:[{
 						menu_name:'代理列表',
@@ -132,7 +132,7 @@
 						web_url:'storeList'
 					}]
 				},{
-					icon:'price-tag',
+					icon:'postcard',
 					menu_name:'财务管理',
 					menu2:[{
 						menu_name:'申请提现',
@@ -145,7 +145,7 @@
 			}
 		},
 		created(){
-			this.admin_name = sessionStorage.getItem("admin_name");
+			this.agent_name = sessionStorage.getItem("agent_name");
 			//获取我的菜单列表
 			let tab = sessionStorage.getItem("tab");
 			if(!tab){

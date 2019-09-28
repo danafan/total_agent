@@ -89,8 +89,10 @@
 				}else{
 					resource.login(this.request).then(res => {
 						if(res.data.code == '1'){
-							sessionStorage.setItem("admin_name",res.data.data.admin_name);
-							sessionStorage.setItem("user_id",res.data.data.admin_id);
+							localStorage.setItem("token",res.data.data.login_token);
+							localStorage.setItem("secret_key",res.data.data.secret_key);
+							localStorage.setItem("agent_id",res.data.data.agent_id);
+							sessionStorage.setItem("agent_name",res.data.data.agent_name);
 							this.$message.success("登录成功");
 							this.$router.push('/index');
 						}else{

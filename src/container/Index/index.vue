@@ -6,27 +6,28 @@
 					<img class="infoIcon" src="../../assets/money1.png">
 					<div class="infoText">
 						<div class="title">可用余额</div>
-						<div class="money">100</div>
+						<div class="money">{{indexData.money}}</div>
 					</div>
 				</div>
 				<div class="infoItem">
 					<img class="infoIcon" src="../../assets/money2.png">
 					<div class="infoText">
 						<div class="title">提现中</div>
-						<div class="money">88</div>
+						<div class="money">{{indexData.withdrawal}}</div>
 					</div>
 				</div>
 			</div>
 		</el-card>
 		<el-card style="width: 300px;margin-top: 24px;">
 			<div class="storeInfo">
-				<div>
+				<div v-if="bankObj">
 					<div class="storeItem">收款银行：{{bankObj.bank_name}}</div>
 					<div class="storeItem">银行卡号：{{bankObj.bank_card_num}}</div>
 					<div class="storeItem">户名：{{bankObj.open_account_name}}</div>
 					<div class="storeItem">支行：{{bankObj.open_account_bank}}</div>
 				</div>
-				<el-button type="primary" size="small" @click="edior">编辑信息</el-button>
+				<el-button v-if="bankObj" type="primary" size="small" @click="getBank">编辑信息</el-button>
+				<el-button v-if="!bankObj" type="primary" size="small" @click="getBank">绑定银行卡</el-button>
 			</div>
 		</el-card>
 		<el-dialog width="40%" title="编辑信息" :visible.sync="isEdior">
@@ -108,8 +109,6 @@
 		created(){
 			//获取首页信息
 			this.getIndex();
-			//获取银行卡信息
-			this.getBank();
 		},
 		inject:['reload'],
 		methods:{
@@ -118,6 +117,10 @@
 				resource.getIndex().then(res => {
 					if(res.data.code == 1){
 						this.indexData = res.data.data;
+						this.bankObj.bank_name = this.indexData.bank_info.bank_name;
+						this.bankObj.bank_card_num = this.indexData.bank_info.bank_card_num;
+						this.bankObj.open_account_name = this.indexData.bank_info.open_account_name;
+						this.bankObj.open_account_bank = this.indexData.bank_info.open_account_bank;
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -127,7 +130,15 @@
 			getBank(){
 				resource.getBankInfo().then(res => {
 					if(res.data.code == 1){
-						this.bankObj = res.data.data;
+						let bank_name = this.bankObj.bank_name;
+						let bank_card_num = this.bankObj.bank_card_num;
+						let open_account_name = this.bankObj.open_account_name;
+						let open_account_bank = this.bankObj.open_account_bank;
+						this.isEdior = true;
+						this.req.bank_name = bank_name;
+						this.req.bank_card_num = bank_card_num;
+						this.req.open_account_name = open_account_name;
+						this.req.open_account_bank = open_account_bank;
 					}else{
 						this.$message.warning(res.data.msg);
 					}
@@ -156,7 +167,7 @@
 				}else if(this.req.open_account_bank == ''){
 					this.$message.warning('请输入支行名称');
 				}else{
-					resource.updateBank(this.req).then(res => {
+					resource.postBankInfo(this.req).then(res => {
 						if(res.data.code == 1){
 							this.$message.success(res.data.msg);
 							this.isEdior = false;
