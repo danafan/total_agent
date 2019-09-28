@@ -71,7 +71,9 @@
 			}
 		},
 		created(){
-			this.codeUrl = this.captcha;
+			this.codeUrl = location.origin === 'http://cs_agent_admin.gxk8090.com'?
+			'http://cs.gxk8090.com/agentadmin/captcha':
+			'http://api.gxk8090.com/agentadmin/captcha';
 		},
 		methods:{
 			getCode(){
