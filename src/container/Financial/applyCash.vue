@@ -11,10 +11,6 @@
 			<el-table :data="detailObj.data.list" border style="width: 100%" align="center" :header-cell-style="{'background':'#f4f4f4'}" :default-sort = "{prop: 'completeTime'}">
 				<el-table-column prop="apply_time" label="提交时间" align="center">
 				</el-table-column>
-				<el-table-column prop="bank_name" label="转账银行" align="center">
-				</el-table-column>
-				<el-table-column prop="name" label="开户名" align="center">
-				</el-table-column>
 				<el-table-column prop="amount" label="金额（元）" align="center">
 				</el-table-column>
 				<el-table-column prop="check_status" label="审核状态" align="center">
@@ -95,7 +91,7 @@
 			},
 			//获取列表
 			getList(){
-				resource.withdrawalList().then(res => {
+				resource.withdrawalList(this.req).then(res => {
 					if(res.data.code == 1){
 						this.detailObj = res.data;
 					}else{

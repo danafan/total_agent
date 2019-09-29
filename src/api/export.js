@@ -11,7 +11,10 @@ export default{
 		}).then(() => {
 			let str = 'agent_id' + '=' + localStorage.getItem("agent_id");
 			req.arr.push(str); 
-			let url = `${location.origin}/agentadmin/${req.url}?${req.arr.join('&')}`;
+			let location = location.origin === 'http://cs_agent_admin.gxk8090.com'?
+			'http://cs.gxk8090.com':
+			'http://api.gxk8090.com';
+			let url = `${location}/agentadmin/${req.url}?${req.arr.join('&')}`;
 			window.open(url);
 		}).catch(() => {
 			Message({
