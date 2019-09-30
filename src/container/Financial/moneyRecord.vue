@@ -33,8 +33,6 @@
 			</el-table-column>
 			<el-table-column prop="money" label="金额（元）" align="center">
 			</el-table-column>
-			<el-table-column prop="residue_money" label="余额（元）" align="center">
-			</el-table-column>
 		</el-table>
 		<div class="page">
 			<el-pagination
